@@ -16,10 +16,29 @@
 </head>
 <body>
   <header>
+    <h1 class="main-header">Code Journal</h1>
   </header>
   <main>
-    <div data-view="entry-form">
-
+    <div class="container">
+      <div data-view="entry-form" class="row text-align-center">
+        <div class="column-full column-half">
+          <h1 class="new-entry-head">New Entry</h1>
+          <div class="image-div">
+            <img class="image-entry" src="images/placeholder-image-square.jpg" alt="">
+          </div>
+          <form id="journal-entry">
+            <label for="title">Title</label>
+            <input required id="title" type="text" name="title">
+            <label for="url">Photo URL</label>
+            <input required id="url" type="url" name="url">
+            <label for="notes">Notes</label>
+            <textarea required id="notes" name="notes" cols="30" rows="10"></textarea>
+            <div class="submit-div">
+              <input class="submit" type="submit" value="SAVE">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>
