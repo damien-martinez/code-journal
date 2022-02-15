@@ -13,6 +13,11 @@
   flex-wrap: wrap;
 }
 
+.column-full,
+.column-half {
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 900px;
@@ -26,11 +31,6 @@
   .column-half {
     width: 50%;
   }
-}
-
-.column-full,
-.column-half {
-  width: 100%;
 }
 
 .text-align-center {
