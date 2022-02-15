@@ -6,8 +6,6 @@
   max-width: 575px;
   margin: 0 auto;
   padding: 0 1rem;
-
-  /* margin-top: -1.5rem; */
 }
 
 .row {
@@ -35,10 +33,6 @@
   }
 }
 
-.text-align-center {
-  justify-content: center;
-}
-
 .negative-margin-top {
-  margin-top: -1.5rem;
+  margin-top: -1rem;
 }
