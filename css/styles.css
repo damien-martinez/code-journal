@@ -34,6 +34,7 @@ textarea {
   margin-bottom: 1.3rem;
   border: 0.1rem solid rgb(199, 199, 199);
   border-radius: 0.2rem;
+  font-family: Cabin, sans-serif;
 }
 
 input:focus,
