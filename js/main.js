@@ -31,13 +31,4 @@ function submitInfo(event) {
 
 }
 
-function stringifyData(event) {
-  var stringifyObj = JSON.stringify(data);
-  localStorage.setItem('localData', stringifyObj);
-  event.preventDefault();
-
-}
-
 $entryForm.addEventListener('submit', submitInfo);
-
-window.addEventListener('beforeunload', stringifyData);

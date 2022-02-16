@@ -15,3 +15,12 @@ if (previousData !== null) {
 
   data = parsedData;
 }
+
+function stringifyData(event) {
+  var stringifyObj = JSON.stringify(data);
+  localStorage.setItem('localData', stringifyObj);
+  event.preventDefault();
+
+}
+
+window.addEventListener('beforeunload', stringifyData);
