@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Journal</title>
   <link rel="icon" href="images/favicon.ico">
-  <link
-    rel="stylesheet"
-    crossorigin="anonymous"
+  <link rel="stylesheet" crossorigin="anonymous"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Cabin|Roboto:400,700,800,900|Roboto+Condensed:400,700,800,900" rel="stylesheet">
 </head>
+
 <body>
   <header>
+    <div class="container">
+      <div class="column-full column-half">
+        <h1 class="main-header">Code Journal</h1>
+      </div>
+    </div>
   </header>
   <main>
+    <div class="container negative-margin-top">
+      <form id="journal-entry-form">
+        <div data-view="entry-form" class="row">
+          <h1 class="new-entry-head column-full">New Entry</h1>
+          <div class="image-div column-full column-half">
+            <img class="image-entry" src="images/placeholder-image-square.jpg" alt="No valid photo">
+          </div>
+          <div class="column-full column-half">
+            <label for="title">Title</label>
+            <input required id="title" type="text" name="title">
+            <label for="url">Photo URL</label>
+            <input required class="url" type="text" name="url" value="">
+          </div>
+          <div class="column-full">
+            <label for="notes">Notes</label>
+            <textarea required id="notes" name="notes" cols="30" rows="6"></textarea>
+            <div class="submit-div">
+              <input class="submit" type="submit" value="SAVE">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>
