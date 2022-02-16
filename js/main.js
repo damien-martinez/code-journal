@@ -32,3 +32,60 @@ function submitInfo(event) {
 }
 
 $entryForm.addEventListener('submit', submitInfo);
+function renderHTML(entry) {
+  var containerDiv = document.createElement('div');
+  containerDiv.setAttribute('class', 'container');
+
+  var entries = document.createElement('div');
+  entries.setAttribute('data-view', 'entries');
+  entries.setAttribute('class', 'row');
+  containerDiv.appendChild(entries);
+
+  var imageColumn = document.createElement('div');
+  imageColumn.setAttribute('class', 'column-full column-half');
+  entries.appendChild(imageColumn);
+
+  var imageUnorderedList = document.createElement('ul');
+  imageColumn.appendChild(imageUnorderedList);
+
+  var imageListItem = document.createElement('li');
+  imageUnorderedList.appendChild(imageListItem);
+
+  var imageElement = document.createElement('img');
+  imageElement.setAttribute('class', 'image-entry');
+  imageElement.setAttribute('src', entry.url);
+  imageElement.setAttribute('alt', '');
+  imageListItem.appendChild(imageElement);
+
+  var textColumn = document.createElement('div');
+  textColumn.setAttribute('class', 'column-full column-half');
+  entries.appendChild(textColumn);
+
+  var textUnorderedList = document.createElement('ul');
+  textColumn.appendChild(textUnorderedList);
+
+  var headerListItem = document.createElement('li');
+  textUnorderedList.appendChild(headerListItem);
+
+  var headerText = document.createElement('h1');
+  headerText.textContent = entry.title;
+  headerListItem.appendChild(headerText);
+
+  var paragraphListItem = document.createElement('li');
+  textUnorderedList.appendChild(paragraphListItem);
+
+  var pContent = document.createElement('p');
+  pContent.textContent = entry.notes;
+  paragraphListItem.appendChild(pContent);
+
+  return containerDiv;
+
+}
+
+var mainSelector = document.querySelector('#main');
+
+for (var i = 0; i < data.entries.length; i++) {
+
+  var renderHTMLReturn = renderHTML(data.entries[i]);
+  mainSelector.appendChild(renderHTMLReturn);
+}
