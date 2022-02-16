@@ -84,8 +84,18 @@ function renderHTML(entry) {
 
 var mainSelector = document.querySelector('#main');
 
-for (var i = 0; i < data.entries.length; i++) {
+function loadDOMTree(event) {
+  var localStorageData = localStorage.getItem('localData');
 
-  var renderHTMLReturn = renderHTML(data.entries[i]);
-  mainSelector.appendChild(renderHTMLReturn);
+  var parsedLocalStorageData = JSON.parse(localStorageData);
+
+  var entries = parsedLocalStorageData.entries;
+
+  for (var i = 0; i < entries.length; i++) {
+
+    var renderHTMLReturn = renderHTML(entries[i]);
+    mainSelector.appendChild(renderHTMLReturn);
+  }
 }
+
+window.addEventListener('DOMContentLoaded', loadDOMTree);
