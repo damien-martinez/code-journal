@@ -6,7 +6,6 @@ var $imageEntry = document.querySelector('.image-entry');
 var $entryForm = document.querySelector('#journal-entry-form');
 
 function addPhoto(event) {
-  // console.log(urlInput.value);
   $imageEntry.setAttribute('src', $urlInput.value);
 
 }
@@ -14,10 +13,8 @@ function addPhoto(event) {
 $urlInput.addEventListener('input', addPhoto);
 
 function submitInfo(event) {
-  // event.preventDefault();
+  event.preventDefault();
   var formInfoObj = {};
-  // console.log('Submitted');
-  // console.log($entryForm.elements);
 
   formInfoObj.title = $entryForm.elements.title.value;
   formInfoObj.url = $entryForm.elements.url.value;
@@ -26,14 +23,6 @@ function submitInfo(event) {
 
   data.entries.unshift(formInfoObj);
   data.nextEntryId++;
-  var stringifyObj = JSON.stringify(data);
-  localStorage.setItem('localData', stringifyObj);
-
-  // console.log(data);
-
-  formInfoObj = {};
-  // console.log(data.nextEntryId);
-  // console.log(data);
 
   $entryForm.elements.title.value = '';
   $entryForm.elements.url.value = '';
@@ -42,4 +31,13 @@ function submitInfo(event) {
 
 }
 
+function stringifyData(event) {
+  var stringifyObj = JSON.stringify(data);
+  localStorage.setItem('localData', stringifyObj);
+  event.preventDefault();
+
+}
+
 $entryForm.addEventListener('submit', submitInfo);
+
+window.addEventListener('beforeunload', stringifyData);
