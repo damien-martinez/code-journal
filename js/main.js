@@ -33,13 +33,10 @@ function submitInfo(event) {
 
 $entryForm.addEventListener('submit', submitInfo);
 function renderHTML(entry) {
-  var containerDiv = document.createElement('div');
-  containerDiv.setAttribute('class', 'container');
 
   var entries = document.createElement('div');
   entries.setAttribute('data-view', 'entries');
   entries.setAttribute('class', 'row');
-  containerDiv.appendChild(entries);
 
   var imageColumn = document.createElement('div');
   imageColumn.setAttribute('class', 'column-full column-half');
@@ -78,11 +75,11 @@ function renderHTML(entry) {
   pContent.textContent = entry.notes;
   paragraphListItem.appendChild(pContent);
 
-  return containerDiv;
+  return entries;
 
 }
 
-var mainSelector = document.querySelector('#main');
+var containerSelector = document.querySelector('.container');
 
 function loadDOMTree(event) {
   var localStorageData = localStorage.getItem('localData');
@@ -94,7 +91,7 @@ function loadDOMTree(event) {
   for (var i = 0; i < entries.length; i++) {
 
     var renderHTMLReturn = renderHTML(entries[i]);
-    mainSelector.appendChild(renderHTMLReturn);
+    containerSelector.appendChild(renderHTMLReturn);
   }
 }
 
