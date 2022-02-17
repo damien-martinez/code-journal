@@ -11,6 +11,7 @@ var $containerNewEntry = document.querySelector('.container-new-entry');
 var $container = document.querySelector('.container');
 var containerSelector = document.querySelector('.container');
 var $containerEntries = document.querySelector('.container-entries');
+var $entries = document.querySelector('.entries');
 
 function addPhoto(event) {
   $imageEntry.setAttribute('src', $urlInput.value);
@@ -114,7 +115,17 @@ function openJournalEntry(event) {
   }
 }
 
+function closeJournalEntry(event) {
+  if (journalView === false) {
+    journalView = true;
+    $containerNewEntry.className = 'container-new-entry hidden';
+    $container.className = 'container';
+    $containerEntries.className = 'container-entries';
+  }
+}
+
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
+$entries.addEventListener('click', closeJournalEntry);
