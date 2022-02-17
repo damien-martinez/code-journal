@@ -20,15 +20,13 @@ function addPhoto(event) {
 
 function submitInfo(event) {
   event.preventDefault();
+
   var formInfoObj = {};
 
   formInfoObj.title = $entryForm.elements.title.value;
   formInfoObj.url = $entryForm.elements.url.value;
   formInfoObj.notes = $entryForm.elements.notes.value;
   formInfoObj.nextEntryId = data.nextEntryId;
-
-  data.entries.unshift(formInfoObj);
-  data.nextEntryId++;
 
   $entryForm.elements.title.value = '';
   $entryForm.elements.url.value = '';
@@ -40,8 +38,28 @@ function submitInfo(event) {
   $container.className = 'container';
   $containerEntries.className = 'container-entries';
 
-  var returnedRenderHTML = renderHTML(formInfoObj);
-  containerSelector.prepend(returnedRenderHTML);
+  if (data.editing === null) {
+
+    data.entries.unshift(formInfoObj);
+    data.nextEntryId++;
+
+    var returnedRenderHTML = renderHTML(formInfoObj);
+    containerSelector.prepend(returnedRenderHTML);
+  } else {
+    var rowNodes = document.querySelectorAll('.row');
+
+    for (var i = 0; i < rowNodes.length; i++) {
+
+      if (rowNodes[i].attributes['data-entry-id'] === undefined) {
+        continue;
+      } else {
+        if (rowNodes[i].attributes['data-entry-id'].value === data.editing.nextEntryId) {
+          returnedRenderHTML = renderHTML(formInfoObj);
+          rowNodes[i].replaceWith(returnedRenderHTML);
+        }
+      }
+    }
+  }
 
 }
 
@@ -120,6 +138,9 @@ function openJournalEntry(event) {
     $container.className = 'container hidden';
     $containerEntries.className = 'container-entries hidden';
     journalView = false;
+    $entryForm.elements.title.value = '';
+    $entryForm.elements.url.value = '';
+    $entryForm.elements.notes.value = '';
 
   }
 }
@@ -133,23 +154,28 @@ function closeJournalEntry(event) {
   }
 }
 
-function test(evet) {
+function editEntry(event) {
 
   if (event.target.tagName === 'I') {
     openJournalEntry(event);
     var $parentDiv = event.target.closest('.row');
+    // console.log(event.target.elements);
+    // console.log($parentDiv);
     var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
 
     for (var i = 0; i < data.entries.length; i++) {
 
       if (data.entries[i].nextEntryId === entryId) {
         data.editing = data.entries[i];
-        // console.log(data.editing);
-        return;
+        break;
       }
     }
+    $entryForm.elements.title.value = data.editing.title;
+    $entryForm.elements.url.value = data.editing.url;
+    $entryForm.elements.notes.value = data.editing.notes;
 
   }
+
 }
 
 $urlInput.addEventListener('input', addPhoto);
@@ -157,4 +183,4 @@ $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
-$container.addEventListener('click', test);
+$container.addEventListener('click', editEntry);
