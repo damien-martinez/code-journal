@@ -133,8 +133,13 @@ function closeJournalEntry(event) {
   }
 }
 
+function test(evet) {
+  // console.log('test');
+}
+
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
+$container.addEventListener('click', test);
