@@ -134,10 +134,21 @@ function closeJournalEntry(event) {
 }
 
 function test(evet) {
-  // console.log(event.target);
-  // console.log(typeof event.target.tagName);
+
   if (event.target.tagName === 'I') {
     openJournalEntry(event);
+    var $parentDiv = event.target.closest('.row');
+    var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
+
+    for (var i = 0; i < data.entries.length; i++) {
+
+      if (data.entries[i].nextEntryId === entryId) {
+        data.editing = data.entries[i];
+        // console.log(data.editing);
+        return;
+      }
+    }
+
   }
 }
 
