@@ -5,12 +5,17 @@ var $urlInput = document.querySelector('.url');
 var $imageEntry = document.querySelector('.image-entry');
 var $entryForm = document.querySelector('#journal-entry-form');
 
+var newLink = document.querySelector('.new-link');
+var journalView = true;
+var $containerNewEntry = document.querySelector('.container-new-entry');
+var $container = document.querySelector('.container');
+var containerSelector = document.querySelector('.container');
+var $containerEntries = document.querySelector('.container-entries');
+
 function addPhoto(event) {
   $imageEntry.setAttribute('src', $urlInput.value);
 
 }
-
-$urlInput.addEventListener('input', addPhoto);
 
 function submitInfo(event) {
   event.preventDefault();
@@ -29,19 +34,25 @@ function submitInfo(event) {
   $entryForm.elements.notes.value = '';
   $imageEntry.setAttribute('src', 'images/placeholder-image-square.jpg');
 
-}
+  journalView = true;
+  $containerNewEntry.className = 'container-new-entry hidden';
+  $container.className = 'container';
+  $containerEntries.className = 'container-entries';
 
-$entryForm.addEventListener('submit', submitInfo);
+  var returnedRenderHTML = renderHTML(formInfoObj);
+  containerSelector.prepend(returnedRenderHTML);
+
+}
 
 function renderHTML(entry) {
 
-  var entries = document.createElement('div');
-  entries.setAttribute('data-view', 'entries');
-  entries.setAttribute('class', 'row');
+  var entriesClass = document.createElement('div');
+  entriesClass.setAttribute('data-view', 'entries');
+  entriesClass.setAttribute('class', 'row');
 
   var imageColumn = document.createElement('div');
   imageColumn.setAttribute('class', 'column-full column-half');
-  entries.appendChild(imageColumn);
+  entriesClass.appendChild(imageColumn);
 
   var imageUnorderedList = document.createElement('ul');
   imageColumn.appendChild(imageUnorderedList);
@@ -57,7 +68,7 @@ function renderHTML(entry) {
 
   var textColumn = document.createElement('div');
   textColumn.setAttribute('class', 'column-full column-half');
-  entries.appendChild(textColumn);
+  entriesClass.appendChild(textColumn);
 
   var textUnorderedList = document.createElement('ul');
   textColumn.appendChild(textUnorderedList);
@@ -76,11 +87,9 @@ function renderHTML(entry) {
   pContent.textContent = entry.notes;
   paragraphListItem.appendChild(pContent);
 
-  return entries;
+  return entriesClass;
 
 }
-
-var containerSelector = document.querySelector('.container');
 
 function loadDOMTree(event) {
   var localStorageData = localStorage.getItem('localData');
@@ -90,26 +99,22 @@ function loadDOMTree(event) {
   var entries = parsedLocalStorageData.entries;
 
   for (var i = 0; i < entries.length; i++) {
-
     var renderHTMLReturn = renderHTML(entries[i]);
     containerSelector.appendChild(renderHTMLReturn);
   }
 }
 
-window.addEventListener('DOMContentLoaded', loadDOMTree);
-
-var newLink = document.querySelector('.new-link');
-var journalView = true;
-var $containerNewEntry = document.querySelector('.container-new-entry');
-var $container = document.querySelector('.container');
-
-function test(event) {
+function openJournalEntry(event) {
   if (journalView === true) {
     $containerNewEntry.className = 'container-new-entry';
     $container.className = 'container hidden';
+    $containerEntries.className = 'container-entries hidden';
     journalView = false;
 
   }
 }
 
-newLink.addEventListener('click', test);
+$urlInput.addEventListener('input', addPhoto);
+$entryForm.addEventListener('submit', submitInfo);
+newLink.addEventListener('click', openJournalEntry);
+window.addEventListener('DOMContentLoaded', loadDOMTree);
