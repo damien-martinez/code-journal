@@ -32,6 +32,7 @@ function submitInfo(event) {
 }
 
 $entryForm.addEventListener('submit', submitInfo);
+
 function renderHTML(entry) {
 
   var entries = document.createElement('div');
@@ -96,3 +97,19 @@ function loadDOMTree(event) {
 }
 
 window.addEventListener('DOMContentLoaded', loadDOMTree);
+
+var newLink = document.querySelector('.new-link');
+var journalView = true;
+var $containerNewEntry = document.querySelector('.container-new-entry');
+var $container = document.querySelector('.container');
+
+function test(event) {
+  if (journalView === true) {
+    $containerNewEntry.className = 'container-new-entry';
+    $container.className = 'container hidden';
+    journalView = false;
+
+  }
+}
+
+newLink.addEventListener('click', test);

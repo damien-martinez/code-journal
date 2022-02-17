@@ -14,6 +14,12 @@
   padding: 0 1rem;
 }
 
+.container-new-entry {
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -29,7 +35,9 @@
 }
 
 @media screen and (min-width: 768px) {
-  .container {
+  .container,
+  .head-container,
+  .container-new-entry {
     max-width: 900px;
   }
 
