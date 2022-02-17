@@ -134,7 +134,11 @@ function closeJournalEntry(event) {
 }
 
 function test(evet) {
-  // console.log('test');
+  // console.log(event.target);
+  // console.log(typeof event.target.tagName);
+  if (event.target.tagName === 'I') {
+    openJournalEntry(event);
+  }
 }
 
 $urlInput.addEventListener('input', addPhoto);
