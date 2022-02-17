@@ -77,9 +77,17 @@ function renderHTML(entry) {
   var headerListItem = document.createElement('li');
   textUnorderedList.appendChild(headerListItem);
 
+  var headerDiv = document.createElement('div');
+  headerDiv.setAttribute('class', 'icon-div');
+  headerListItem.appendChild(headerDiv);
+
   var headerText = document.createElement('h1');
   headerText.textContent = entry.title;
-  headerListItem.appendChild(headerText);
+  headerDiv.appendChild(headerText);
+
+  var icon = document.createElement('i');
+  icon.setAttribute('class', 'fa-solid fa-pencil icon');
+  headerDiv.appendChild(icon);
 
   var paragraphListItem = document.createElement('li');
   textUnorderedList.appendChild(paragraphListItem);
