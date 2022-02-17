@@ -8,6 +8,24 @@
   padding: 0 1rem;
 }
 
+.head-container {
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.container-new-entry {
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.container-entries {
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -18,8 +36,15 @@
   width: 100%;
 }
 
+.no-wrap {
+  flex-wrap: nowrap;
+}
+
 @media screen and (min-width: 768px) {
-  .container {
+  .container,
+  .head-container,
+  .container-new-entry,
+  .container-entries {
     max-width: 900px;
   }
 
@@ -33,6 +58,10 @@
   }
 }
 
-.negative-margin-top {
-  margin-top: -1rem;
+.inline {
+  display: inline;
+}
+
+.justify-content {
+  justify-content: space-between;
 }

@@ -17,14 +17,17 @@
 
 <body>
   <header>
-    <div class="container">
-      <div class="column-full column-half">
-        <h1 class="main-header">Code Journal</h1>
+    <div class="head-container">
+      <div class="row no-wrap top-bottom-margin">
+        <div class="column-full">
+          <p class="main-header inline">Code Journal</p>
+          <a class="entries inline" href="#">Entries</a>
+        </div>
       </div>
     </div>
   </header>
   <main>
-    <div class="container negative-margin-top">
+    <div class="container-new-entry hidden">
       <form id="journal-entry-form">
         <div data-view="entry-form" class="row">
           <h1 class="new-entry-head column-full">New Entry</h1>
@@ -47,6 +50,25 @@
         </div>
       </form>
     </div>
+
+
+    <div class="container-entries">
+      <div class="row justify-content entries-header-margins">
+        <p class="entries-header">Entries</p>
+        <a class="new-link" href="#">NEW</a>
+      </div>
+    </div>
+    <div class="container">
+
+    </div>
+
+
+
+
+
+
+
+
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
