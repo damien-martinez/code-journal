@@ -50,6 +50,7 @@ function renderHTML(entry) {
   var entriesClass = document.createElement('div');
   entriesClass.setAttribute('data-view', 'entries');
   entriesClass.setAttribute('class', 'row');
+  entriesClass.setAttribute('data-entry-id', entry.nextEntryId);
 
   var imageColumn = document.createElement('div');
   imageColumn.setAttribute('class', 'column-full column-half');
