@@ -58,7 +58,16 @@ function submitInfo(event) {
           formInfoObj.nextEntryId = data.editing.nextEntryId;
           returnedRenderHTML = renderHTML(formInfoObj);
           rowNodes[i].replaceWith(returnedRenderHTML);
+
         }
+      }
+    }
+
+    for (i = 0; i < data.entries.length; i++) {
+      if (data.editing.nextEntryId === data.entries[i].nextEntryId) {
+
+        data.entries[i] = formInfoObj;
+
       }
     }
   }
