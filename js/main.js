@@ -39,13 +39,13 @@ function submitInfo(event) {
   $containerEntries.className = 'container-entries';
 
   if (data.editing === null) {
-
     data.entries.unshift(formInfoObj);
     data.nextEntryId++;
 
     var returnedRenderHTML = renderHTML(formInfoObj);
     containerSelector.prepend(returnedRenderHTML);
   } else {
+
     var rowNodes = document.querySelectorAll('.row');
 
     for (var i = 0; i < rowNodes.length; i++) {
@@ -53,7 +53,9 @@ function submitInfo(event) {
       if (rowNodes[i].attributes['data-entry-id'] === undefined) {
         continue;
       } else {
-        if (rowNodes[i].attributes['data-entry-id'].value === data.editing.nextEntryId) {
+        if (parseInt(rowNodes[i].attributes['data-entry-id'].value) === data.editing.nextEntryId) {
+
+          formInfoObj.nextEntryId = data.editing.nextEntryId;
           returnedRenderHTML = renderHTML(formInfoObj);
           rowNodes[i].replaceWith(returnedRenderHTML);
         }
@@ -129,6 +131,7 @@ function loadDOMTree(event) {
   for (var i = 0; i < entries.length; i++) {
     var renderHTMLReturn = renderHTML(entries[i]);
     containerSelector.appendChild(renderHTMLReturn);
+    data.editing = null;
   }
 }
 
@@ -159,8 +162,6 @@ function editEntry(event) {
   if (event.target.tagName === 'I') {
     openJournalEntry(event);
     var $parentDiv = event.target.closest('.row');
-    // console.log(event.target.elements);
-    // console.log($parentDiv);
     var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
 
     for (var i = 0; i < data.entries.length; i++) {
