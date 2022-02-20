@@ -183,9 +183,9 @@ function editEntry(event) {
     $entryForm.elements.title.value = data.editing.title;
     $entryForm.elements.url.value = data.editing.url;
     $entryForm.elements.notes.value = data.editing.notes;
+    $imageEntry.setAttribute('src', $entryForm.elements.url.value);
 
   }
-
 }
 
 $urlInput.addEventListener('input', addPhoto);
