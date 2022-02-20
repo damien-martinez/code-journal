@@ -73,8 +73,8 @@ function submitInfo(event) {
 
       }
     }
+    data.editing = null;
   }
-
 }
 
 function renderHTML(entry) {
@@ -143,13 +143,13 @@ function loadDOMTree(event) {
   for (var i = 0; i < entries.length; i++) {
     var renderHTMLReturn = renderHTML(entries[i]);
     containerSelector.appendChild(renderHTMLReturn);
-    data.editing = null;
+
   }
+  data.editing = null;
 }
 
 function openJournalEntry(event) {
   if (journalView === true) {
-    data.editing = null;
     $containerNewEntry.className = 'container-new-entry';
     $container.className = 'container hidden';
     $containerEntries.className = 'container-entries hidden';
@@ -157,6 +157,7 @@ function openJournalEntry(event) {
     $entryForm.elements.title.value = '';
     $entryForm.elements.url.value = '';
     $entryForm.elements.notes.value = '';
+    $imageEntry.setAttribute('src', 'images/placeholder-image-square.jpg');
 
   }
 }
@@ -168,6 +169,7 @@ function closeJournalEntry(event) {
     $container.className = 'container';
     $containerEntries.className = 'container-entries';
     $deleteEntry.className = 'delete-entry hidden';
+    data.editing = null;
   }
 }
 
