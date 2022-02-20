@@ -34,7 +34,7 @@ textarea:focus {
 
 .submit-div {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .submit {
@@ -131,4 +131,8 @@ p {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
+}
+
+.delete-entry {
+  color: rgb(216, 138, 138);
 }

@@ -12,6 +12,7 @@ var $container = document.querySelector('.container');
 var containerSelector = document.querySelector('.container');
 var $containerEntries = document.querySelector('.container-entries');
 var $entries = document.querySelector('.entries');
+var $deleteEntry = document.querySelector('.delete-entry');
 
 function addPhoto(event) {
   $imageEntry.setAttribute('src', $urlInput.value);
@@ -163,6 +164,7 @@ function closeJournalEntry(event) {
     $containerNewEntry.className = 'container-new-entry hidden';
     $container.className = 'container';
     $containerEntries.className = 'container-entries';
+    $deleteEntry.className = 'delete-entry hidden';
   }
 }
 
@@ -172,6 +174,7 @@ function editEntry(event) {
     openJournalEntry(event);
     var $parentDiv = event.target.closest('.row');
     var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
+    $deleteEntry.className = 'delete-entry';
 
     for (var i = 0; i < data.entries.length; i++) {
 
@@ -188,9 +191,16 @@ function editEntry(event) {
   }
 }
 
+// function deleteEntry(event) {
+//   if (data.editing !== null) {
+
+//   }
+// }
+
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
 $container.addEventListener('click', editEntry);
+// $deleteEntry.addEventListener('click', deleteEntry);
