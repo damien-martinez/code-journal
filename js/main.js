@@ -20,15 +20,13 @@ function addPhoto(event) {
 
 function submitInfo(event) {
   event.preventDefault();
+
   var formInfoObj = {};
 
   formInfoObj.title = $entryForm.elements.title.value;
   formInfoObj.url = $entryForm.elements.url.value;
   formInfoObj.notes = $entryForm.elements.notes.value;
   formInfoObj.nextEntryId = data.nextEntryId;
-
-  data.entries.unshift(formInfoObj);
-  data.nextEntryId++;
 
   $entryForm.elements.title.value = '';
   $entryForm.elements.url.value = '';
@@ -40,8 +38,39 @@ function submitInfo(event) {
   $container.className = 'container';
   $containerEntries.className = 'container-entries';
 
-  var returnedRenderHTML = renderHTML(formInfoObj);
-  containerSelector.prepend(returnedRenderHTML);
+  if (data.editing === null) {
+    data.entries.unshift(formInfoObj);
+    data.nextEntryId++;
+
+    var returnedRenderHTML = renderHTML(formInfoObj);
+    containerSelector.prepend(returnedRenderHTML);
+  } else {
+
+    var rowNodes = document.querySelectorAll('.row');
+
+    for (var i = 0; i < rowNodes.length; i++) {
+
+      if (rowNodes[i].attributes['data-entry-id'] === undefined) {
+        continue;
+      } else {
+        if (parseInt(rowNodes[i].attributes['data-entry-id'].value) === data.editing.nextEntryId) {
+
+          formInfoObj.nextEntryId = data.editing.nextEntryId;
+          returnedRenderHTML = renderHTML(formInfoObj);
+          rowNodes[i].replaceWith(returnedRenderHTML);
+
+        }
+      }
+    }
+
+    for (i = 0; i < data.entries.length; i++) {
+      if (data.editing.nextEntryId === data.entries[i].nextEntryId) {
+
+        data.entries[i] = formInfoObj;
+
+      }
+    }
+  }
 
 }
 
@@ -50,6 +79,7 @@ function renderHTML(entry) {
   var entriesClass = document.createElement('div');
   entriesClass.setAttribute('data-view', 'entries');
   entriesClass.setAttribute('class', 'row');
+  entriesClass.setAttribute('data-entry-id', entry.nextEntryId);
 
   var imageColumn = document.createElement('div');
   imageColumn.setAttribute('class', 'column-full column-half');
@@ -77,9 +107,17 @@ function renderHTML(entry) {
   var headerListItem = document.createElement('li');
   textUnorderedList.appendChild(headerListItem);
 
+  var headerDiv = document.createElement('div');
+  headerDiv.setAttribute('class', 'icon-div');
+  headerListItem.appendChild(headerDiv);
+
   var headerText = document.createElement('h1');
   headerText.textContent = entry.title;
-  headerListItem.appendChild(headerText);
+  headerDiv.appendChild(headerText);
+
+  var icon = document.createElement('i');
+  icon.setAttribute('class', 'fa-solid fa-pencil icon');
+  headerDiv.appendChild(icon);
 
   var paragraphListItem = document.createElement('li');
   textUnorderedList.appendChild(paragraphListItem);
@@ -102,6 +140,7 @@ function loadDOMTree(event) {
   for (var i = 0; i < entries.length; i++) {
     var renderHTMLReturn = renderHTML(entries[i]);
     containerSelector.appendChild(renderHTMLReturn);
+    data.editing = null;
   }
 }
 
@@ -111,6 +150,9 @@ function openJournalEntry(event) {
     $container.className = 'container hidden';
     $containerEntries.className = 'container-entries hidden';
     journalView = false;
+    $entryForm.elements.title.value = '';
+    $entryForm.elements.url.value = '';
+    $entryForm.elements.notes.value = '';
 
   }
 }
@@ -124,8 +166,31 @@ function closeJournalEntry(event) {
   }
 }
 
+function editEntry(event) {
+
+  if (event.target.tagName === 'I') {
+    openJournalEntry(event);
+    var $parentDiv = event.target.closest('.row');
+    var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
+
+    for (var i = 0; i < data.entries.length; i++) {
+
+      if (data.entries[i].nextEntryId === entryId) {
+        data.editing = data.entries[i];
+        break;
+      }
+    }
+    $entryForm.elements.title.value = data.editing.title;
+    $entryForm.elements.url.value = data.editing.url;
+    $entryForm.elements.notes.value = data.editing.notes;
+    $imageEntry.setAttribute('src', $entryForm.elements.url.value);
+
+  }
+}
+
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
+$container.addEventListener('click', editEntry);
