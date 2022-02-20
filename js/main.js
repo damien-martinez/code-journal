@@ -13,6 +13,8 @@ var containerSelector = document.querySelector('.container');
 var $containerEntries = document.querySelector('.container-entries');
 var $entries = document.querySelector('.entries');
 var $deleteEntry = document.querySelector('.delete-entry');
+var $modalContainer = document.querySelector('.modal-container');
+var $modal = document.querySelector('.modal');
 
 function addPhoto(event) {
   $imageEntry.setAttribute('src', $urlInput.value);
@@ -147,6 +149,7 @@ function loadDOMTree(event) {
 
 function openJournalEntry(event) {
   if (journalView === true) {
+    data.editing = null;
     $containerNewEntry.className = 'container-new-entry';
     $container.className = 'container hidden';
     $containerEntries.className = 'container-entries hidden';
@@ -191,11 +194,45 @@ function editEntry(event) {
   }
 }
 
-// function deleteEntry(event) {
-//   if (data.editing !== null) {
+function deleteEntry(event) {
 
-//   }
-// }
+  $modalContainer.className = 'modal-container';
+
+}
+
+function interactWithModal(event) {
+  if (event.target.textContent === 'CANCEL') {
+    $modalContainer.className = 'modal-container hidden';
+  } else if (event.target.textContent === 'CONFIRM') {
+
+    var rowNodes = document.querySelectorAll('.row');
+
+    for (var i = 0; i < rowNodes.length; i++) {
+      if (rowNodes[i].attributes['data-entry-id'] === undefined) {
+        continue;
+      } else {
+        if (parseInt(rowNodes[i].attributes['data-entry-id'].value) === data.editing.nextEntryId) {
+          rowNodes[i].remove();
+        }
+      }
+    }
+
+    for (i = 0; i < data.entries.length; i++) {
+      if (data.editing.nextEntryId === data.entries[i].nextEntryId) {
+
+        data.entries.splice(i, 1);
+      }
+    }
+
+  }
+
+  $containerNewEntry.className = 'container-new-entry hidden';
+  $container.className = 'container';
+  $containerEntries.className = 'container-entries';
+  $deleteEntry.className = 'delete-entry hidden';
+  $modalContainer.className = 'modal-container hidden';
+  journalView = true;
+}
 
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
@@ -203,4 +240,5 @@ newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
 $container.addEventListener('click', editEntry);
-// $deleteEntry.addEventListener('click', deleteEntry);
+$deleteEntry.addEventListener('click', deleteEntry);
+$modal.addEventListener('click', interactWithModal);
