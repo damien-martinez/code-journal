@@ -11,6 +11,8 @@ var previousData = localStorage.getItem('localData');
 
 if (previousData !== null) {
   var parsedData = JSON.parse(previousData);
+  parsedData.editing = null;
+
   // console.log('parsed date', parsedData);
 
   data = parsedData;

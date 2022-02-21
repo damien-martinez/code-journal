@@ -8,6 +8,12 @@
   padding: 0 1rem;
 }
 
+.modal-container {
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .head-container {
   max-width: 575px;
   margin: 0 auto;

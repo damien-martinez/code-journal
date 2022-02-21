@@ -12,6 +12,9 @@ var $container = document.querySelector('.container');
 var containerSelector = document.querySelector('.container');
 var $containerEntries = document.querySelector('.container-entries');
 var $entries = document.querySelector('.entries');
+var $deleteEntry = document.querySelector('.delete-entry');
+var $modalContainer = document.querySelector('.modal-container');
+var $modal = document.querySelector('.modal');
 
 function addPhoto(event) {
   $imageEntry.setAttribute('src', $urlInput.value);
@@ -70,8 +73,8 @@ function submitInfo(event) {
 
       }
     }
+    data.editing = null;
   }
-
 }
 
 function renderHTML(entry) {
@@ -140,8 +143,9 @@ function loadDOMTree(event) {
   for (var i = 0; i < entries.length; i++) {
     var renderHTMLReturn = renderHTML(entries[i]);
     containerSelector.appendChild(renderHTMLReturn);
-    data.editing = null;
+
   }
+  data.editing = null;
 }
 
 function openJournalEntry(event) {
@@ -153,6 +157,7 @@ function openJournalEntry(event) {
     $entryForm.elements.title.value = '';
     $entryForm.elements.url.value = '';
     $entryForm.elements.notes.value = '';
+    $imageEntry.setAttribute('src', 'images/placeholder-image-square.jpg');
 
   }
 }
@@ -163,6 +168,8 @@ function closeJournalEntry(event) {
     $containerNewEntry.className = 'container-new-entry hidden';
     $container.className = 'container';
     $containerEntries.className = 'container-entries';
+    $deleteEntry.className = 'delete-entry hidden';
+    data.editing = null;
   }
 }
 
@@ -172,6 +179,7 @@ function editEntry(event) {
     openJournalEntry(event);
     var $parentDiv = event.target.closest('.row');
     var entryId = parseInt($parentDiv.getAttribute('data-entry-id'));
+    $deleteEntry.className = 'delete-entry';
 
     for (var i = 0; i < data.entries.length; i++) {
 
@@ -188,9 +196,51 @@ function editEntry(event) {
   }
 }
 
+function deleteEntry(event) {
+
+  $modalContainer.className = 'modal-container';
+
+}
+
+function interactWithModal(event) {
+  if (event.target.textContent === 'CANCEL') {
+    $modalContainer.className = 'modal-container hidden';
+  } else if (event.target.textContent === 'CONFIRM') {
+
+    var rowNodes = document.querySelectorAll('.row');
+
+    for (var i = 0; i < rowNodes.length; i++) {
+      if (rowNodes[i].attributes['data-entry-id'] === undefined) {
+        continue;
+      } else {
+        if (parseInt(rowNodes[i].attributes['data-entry-id'].value) === data.editing.nextEntryId) {
+          rowNodes[i].remove();
+        }
+      }
+    }
+
+    for (i = 0; i < data.entries.length; i++) {
+      if (data.editing.nextEntryId === data.entries[i].nextEntryId) {
+
+        data.entries.splice(i, 1);
+      }
+    }
+
+  }
+
+  $containerNewEntry.className = 'container-new-entry hidden';
+  $container.className = 'container';
+  $containerEntries.className = 'container-entries';
+  $deleteEntry.className = 'delete-entry hidden';
+  $modalContainer.className = 'modal-container hidden';
+  journalView = true;
+}
+
 $urlInput.addEventListener('input', addPhoto);
 $entryForm.addEventListener('submit', submitInfo);
 newLink.addEventListener('click', openJournalEntry);
 window.addEventListener('DOMContentLoaded', loadDOMTree);
 $entries.addEventListener('click', closeJournalEntry);
 $container.addEventListener('click', editEntry);
+$deleteEntry.addEventListener('click', deleteEntry);
+$modal.addEventListener('click', interactWithModal);
